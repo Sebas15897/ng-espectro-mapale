@@ -1,0 +1,8 @@
+<div class="select-container">
+  <select class="form-select" (change)="onInstrumentSelect($event)">
+    <option value="">Selecciona un instrumento</option>
+    <option *ngFor="let instrument of instruments" [value]="instrument.id">
+      {{ instrument.name }}
+    </option>
+  </select>
+</div>

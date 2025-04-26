@@ -1,0 +1,31 @@
+<div class="spectrum-analyzer-container">
+  <!-- Gráfico del espectro -->
+  <div class="spectrum-chart">
+    <div class="chart-wrapper">
+      <canvas #spectrumCanvas></canvas>
+    </div>
+  </div>
+
+  <!-- Panel de información -->
+  <div class="frequency-info">
+    <div class="info-card">
+      <h3>Frecuencia Dominante</h3>
+      <div class="frequency-analyzer">
+        <div class="frequency-value">
+          {{ dominantFrequency | number:'1.0-0' }}<span class="unit">Hz</span>
+        </div>
+        <div class="frequency-indicator" [ngClass]="getFrequencyRangeClass()"></div>
+      </div>
+      <div class="amplitude-badge">
+        Amplitud: {{ dominantAmplitude }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Resumen de la sesión -->
+  <app-session-summary
+    *ngIf="sessionSummary"
+    [summary]="sessionSummary"
+    class="session-summary-wrapper">
+  </app-session-summary>
+</div>

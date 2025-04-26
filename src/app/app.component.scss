@@ -1,0 +1,104 @@
+.app-container {
+  min-height: 100vh;
+  background-color: #F5F5F7;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  .header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .app-title {
+    h2 {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1D1D1F;
+    }
+
+    small {
+      color: #86868B;
+      font-size: 0.9rem;
+    }
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+.app-content {
+  flex: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+
+  .main-row {
+    display: grid;
+    grid-template-columns: 8fr 4fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .analyzer-section,
+  .frequency-section,
+  .spectrum-section {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+  }
+
+  .spectrum-section {
+    margin-top: 2rem;
+  }
+}
+
+.app-footer {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  text-align: center;
+
+  small {
+    color: #86868B;
+  }
+}
+
+@media (max-width: 1024px) {
+  .app-header .header-content {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+
+    .controls {
+      flex-direction: column;
+    }
+  }
+
+  .app-content .main-row {
+    grid-template-columns: 1fr;
+  }
+}

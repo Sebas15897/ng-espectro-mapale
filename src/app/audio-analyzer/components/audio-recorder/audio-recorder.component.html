@@ -1,0 +1,12 @@
+<div class="audio-recorder-container">
+  <button
+    class="record-button"
+    [class.recording]="isRecording"
+    (click)="toggleRecording()"
+  >
+    <div class="button-content">
+      <div class="record-icon"></div>
+    </div>
+    <span class="status-text">{{ isRecording ? 'Grabando' : 'Grabar' }}</span>
+  </button>
+</div>
