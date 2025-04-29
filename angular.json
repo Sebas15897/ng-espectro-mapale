@@ -29,7 +29,7 @@
               "src/styles.scss"
             ],
             "scripts": [],
-            "baseHref": "/espectro-mapale/"
+            "baseHref": "/ng-espectro-mapale/"
           },
           "configurations": {
             "production": {
