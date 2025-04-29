@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SessionSummary, FrequencyRange } from '../../models/session-summary.model';
+import { WordDocumentService } from '../../services/word-document.service';
 
 @Component({
   selector: 'app-session-summary',
@@ -14,6 +15,9 @@ import { SessionSummary, FrequencyRange } from '../../models/session-summary.mod
           <span>Duración: {{ summary.duration | number:'1.0-0' }} segundos</span>
           <span>Muestras totales: {{ summary.totalSamples }}</span>
         </div>
+        <button class="download-button" (click)="downloadReport()">
+          Descargar Reporte Word
+        </button>
       </div>
 
       <div class="frequency-ranges">
@@ -71,6 +75,22 @@ import { SessionSummary, FrequencyRange } from '../../models/session-summary.mod
         margin-top: 0.5rem;
         font-size: 0.9rem;
         color: #aaa;
+      }
+    }
+
+    .download-button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: #0056b3;
       }
     }
 
@@ -156,4 +176,24 @@ import { SessionSummary, FrequencyRange } from '../../models/session-summary.mod
 })
 export class SessionSummaryComponent {
   @Input() summary: SessionSummary | null = null;
+
+  constructor(private wordDocumentService: WordDocumentService) {}
+
+  async downloadReport() {
+    if (!this.summary) return;
+
+    try {
+      const blob = await this.wordDocumentService.generateSessionReport(this.summary);
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `reporte-analisis-${this.summary.startTime.toISOString().split('T')[0]}.docx`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error('Error al generar el reporte:', error);
+    }
+  }
 }
