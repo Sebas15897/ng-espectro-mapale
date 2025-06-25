@@ -60,12 +60,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "espectro-mapale:build"
+          },
           "configurations": {
             "production": {
-              "browserTarget": "espectro-mapale:build:production"
+              "buildTarget": "espectro-mapale:build:production"
             },
             "development": {
-              "browserTarget": "espectro-mapale:build:development"
+              "buildTarget": "espectro-mapale:build:development"
             }
           },
           "defaultConfiguration": "development"

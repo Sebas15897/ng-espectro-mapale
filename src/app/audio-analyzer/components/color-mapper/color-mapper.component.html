@@ -1,4 +1,5 @@
 <div class="color-mapper-container">
+
   <div class="frequency-display">
     <div
       class="color-display"
@@ -6,6 +7,21 @@
     >
       <h3>Frecuencia Dominante</h3>
       <p>{{ getInstrumentDescription() }}</p>
+    </div>
+
+    <!-- Sección de Figura Geométrica del Instrumento -->
+    <div class="geometric-display" *ngIf="isShapeVisible()">
+      <div class="shape-container">
+        <div 
+          class="geometric-shape" 
+          [innerHTML]="getInstrumentShape()?.svg"
+          [ngStyle]="getShapeStyle()"
+        ></div>
+        <div class="shape-info">
+          <h4>{{ getInstrumentShape()?.name }}</h4>
+          <p>{{ getInstrumentShape()?.description }}</p>
+        </div>
+      </div>
     </div>
 
     <div class="instrument-display" *ngIf="selectedInstrument">
@@ -20,6 +36,24 @@
     </div>
   </div>
 
+  <!-- Sección de combinación visual: Color + Forma -->
+  <div class="visual-synthesis" *ngIf="isShapeVisible()">
+    <h4>Síntesis Visual</h4>
+    <div class="combined-visualization">
+      <div 
+        class="combined-shape" 
+        [innerHTML]="getInstrumentShape()?.svg"
+        [style.color]="getDominantFrequencyColor()"
+        [ngStyle]="getShapeStyle()"
+      ></div>
+      <div class="synthesis-info">
+        <p><strong>Instrumento:</strong> {{ selectedInstrument | titlecase }}</p>
+        <p><strong>Forma:</strong> {{ getInstrumentShape()?.name }}</p>
+        <p><strong>Color Frecuencia:</strong> {{ getDominantFrequencyColor() }}</p>
+      </div>
+    </div>
+  </div>
+
   <div class="frequency-legend">
     <h4>Espectro de Frecuencias</h4>
     <div class="legend-item" *ngFor="let range of frequencyRanges">
@@ -27,6 +61,24 @@
       <div class="range-info">
         <span>{{ range.min }}Hz - {{ range.max }}Hz</span>
         <p>{{ range.description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leyenda de Formas Geométricas -->
+  <div class="shapes-legend">
+    <h4>Formas de Instrumentos</h4>
+    <div class="shape-legend-grid">
+      <div class="shape-legend-item" *ngFor="let shape of instrumentShapes | keyvalue">
+        <div 
+          class="legend-shape" 
+          [innerHTML]="shape.value.svg"
+          [style.color]="shape.value.color"
+        ></div>
+        <div class="legend-shape-info">
+          <span><strong>{{ shape.key | titlecase }}</strong></span>
+          <small>{{ shape.value.name }}</small>
+        </div>
       </div>
     </div>
   </div>

@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SessionSummary, FrequencyRange } from '../../models/session-summary.model';
 import { WordDocumentService } from '../../services/word-document.service';
+import { ResearchReportService } from '../../services/research-report.service';
 
 @Component({
   selector: 'app-session-summary',
@@ -15,9 +16,11 @@ import { WordDocumentService } from '../../services/word-document.service';
           <span>Duración: {{ summary.duration | number:'1.0-0' }} segundos</span>
           <span>Muestras totales: {{ summary.totalSamples }}</span>
         </div>
-        <button class="download-button" (click)="downloadReport()">
-          Descargar Reporte Word
-        </button>
+        <div class="button-group">
+          <button class="download-button" (click)="downloadReport()">
+            Descargar Reporte Word
+          </button>
+        </div>
       </div>
 
       <div class="frequency-ranges">
@@ -78,19 +81,36 @@ import { WordDocumentService } from '../../services/word-document.service';
       }
     }
 
-    .download-button {
+    .button-group {
       margin-top: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .download-button, .research-button {
       padding: 0.5rem 1rem;
-      background-color: #007bff;
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
       font-size: 0.9rem;
       transition: background-color 0.2s;
+    }
+
+    .download-button {
+      background-color: #007bff;
 
       &:hover {
         background-color: #0056b3;
+      }
+    }
+
+    .research-button {
+      background-color: #28a745;
+
+      &:hover {
+        background-color: #1e7e34;
       }
     }
 
@@ -177,7 +197,10 @@ import { WordDocumentService } from '../../services/word-document.service';
 export class SessionSummaryComponent {
   @Input() summary: SessionSummary | null = null;
 
-  constructor(private wordDocumentService: WordDocumentService) {}
+  constructor(
+    private wordDocumentService: WordDocumentService,
+    private researchReportService: ResearchReportService
+  ) {}
 
   async downloadReport() {
     if (!this.summary) return;
@@ -195,5 +218,9 @@ export class SessionSummaryComponent {
     } catch (error) {
       console.error('Error al generar el reporte:', error);
     }
+  }
+
+  downloadResearchReport(): void {
+    this.researchReportService.downloadReport();
   }
 }
